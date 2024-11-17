@@ -1,5 +1,5 @@
 
-<nav class="bg-gray-800">
+<nav class="bg-[#2A3F54]">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -27,7 +27,9 @@
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <div class="flex shrink-0 items-center">
-            <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+            <a href="{{ route('home') }}">
+              <h1 class="text-[1.3rem] font-bold text-white"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>SmartTrackCRM</h1>
+           </a>
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">

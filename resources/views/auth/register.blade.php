@@ -1,7 +1,7 @@
 @extends('fontend.layout.app')
 
 @section('content')
-    <div class="flex justify-center items-center ">
+    <div class="flex justify-center items-center h-screen">
         <form method="POST" action="{{ route('register') }}" class="mt-6 space-y-2 bg-gray-200 p-5 w-[35%] rounded-md">
             @csrf
             <h1 class="text-2xl font-bold text-center text-gray-600">Register</h1>

@@ -9,7 +9,7 @@ use App\Http\Controllers\ProjectController;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

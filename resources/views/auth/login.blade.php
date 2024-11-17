@@ -1,12 +1,10 @@
 @extends('fontend.layout.app')
 
 @section('content')
-<!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
+<div class="flex justify-center items-center h-screen">
+    <form method="POST" action="{{ route('login') }}" class="space-y-2 bg-gray-200 p-5 w-[35%] rounded-md">
         @csrf
-
+        <h1 class="text-2xl font-bold text-center text-gray-600">Sign In</h1>
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -46,4 +44,5 @@
             </x-primary-button>
         </div>
     </form>
+</div>
 @endsection
