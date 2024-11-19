@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with('project', 'user', 'client')->paginate(5);
+        $tasks = Task::with(['user','project', 'client'])->get();
         return view('task.index', compact('tasks'));
     }
 
@@ -37,7 +37,7 @@ class TaskController extends Controller
     public function store(TaskStoreData $request)
     {
         Task::create($request->validated());
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully');
     }
 
   
@@ -55,7 +55,7 @@ class TaskController extends Controller
     public function update(TaskUpdateData $request, Task $task)
     {
         $task->update($request->validated());
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
     }
 
     /**
@@ -63,7 +63,11 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        return redirect()->route('tasks.index');
+        try{
+            $task->delete();
+            return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
+        }catch(\Exception $e){
+            return redirect()->route('tasks.index')->with('error', 'Task cannot be deleted');
+        }
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\Client;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientStoreData;
 use App\Http\Requests\ClientUpdateData;
@@ -14,7 +16,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(5);
+        $clients = Client::get();
 
         return view('clients.index', compact('clients'));
     }
@@ -34,7 +36,7 @@ class ClientController extends Controller
     {
         Client::create($request->validated());
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Client created successfully');
     }
 
    
@@ -53,17 +55,22 @@ class ClientController extends Controller
         $clients = Client::find($id);
         $clients->update($request->validated());
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Client updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Client $client)
     {
-        $clients = Client::find($id);
-        $clients->delete();
-
-        return redirect()->route('clients.index');
+       $tasks = Task::pluck('client_id');
+       $project = Project::pluck('client_id');
+       if($tasks->contains($client->id) || $project->contains($client->id)){
+        return redirect()->route('clients.index')->with('error', 'Client cannot be deleted because it has tasks or projects');
+       }
+       else{
+        $client->delete();
+        return redirect()->route('clients.index')->with('success', 'Client deleted successfully');
+       }
     }
 }

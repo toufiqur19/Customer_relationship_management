@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
@@ -15,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['client','user'])->paginate(5);
+        $projects = Project::with(['client','user'])->get();
 
         return view('projects.index', compact('projects'));
     }
@@ -37,7 +38,7 @@ class ProjectController extends Controller
     {
         Project::create($request->validated());
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')->with('success', 'Project created successfully');
     }
 
     
@@ -55,7 +56,7 @@ class ProjectController extends Controller
     {
         $project->update($request->validated());
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully');
     }
 
     /**
@@ -63,8 +64,13 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->delete();
-
-        return redirect()->route('projects.index');
+        $tasks = Task::pluck('project_id');
+        if($tasks->contains($project->id)){
+            return redirect()->route('projects.index')->with('error', 'Project cannot be deleted because it has tasks');
+        }
+        else{
+            $project->delete();
+            return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
+        }
     }
 }

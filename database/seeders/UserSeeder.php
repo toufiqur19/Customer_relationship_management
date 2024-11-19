@@ -15,8 +15,8 @@ class UserSeeder extends Seeder
     {
         User::factory(10)->create();
         User::factory()->create([
-            'first_name' => 'Admin',
-            'last_name' => 'Admin',
+            'first_name' => 'admin',
+            'last_name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => 'password',
         ])->syncRoles('admin');

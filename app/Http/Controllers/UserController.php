@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(5);
+        $users = User::get();
         return view('users.index', compact('users'));
     }
 
@@ -32,7 +32,7 @@ class UserController extends Controller
     public function store(StoreUserData $request)
     {
         User::create($request->validated());
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
 
@@ -50,7 +50,7 @@ class UserController extends Controller
     public function update(UpdateUserData $request, User $user)
     {
         $user->update($request->validated());
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     /**
@@ -58,7 +58,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return redirect()->route('users.index');
+        try{
+            $user->delete();
+            return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        }catch(\Exception $e){
+            return redirect()->route('users.index')->with('error', 'User cannot be deleted because it has clients');
+        }
+        
     }
 }

@@ -1,4 +1,14 @@
 <x-app-layout>
+    @session('success')
+    <script>
+        successToast("{{ session('success') }}");
+    </script>
+    @endsession
+    @session('error')
+    <script>
+        errorToast("{{ session('error') }}");
+    </script>
+    @endsession
     <x-slot name="header">
         <h2 class="font-semibold text-xl flex justify-between items-center text-gray-800 leading-tight">
             {{ __('Users') }}
@@ -11,7 +21,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="relative overflow-x-auto">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                        <table id="myTable" class="w-full mt-5 text-sm text-left rtl:text-right text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                                 <tr class="font-semibold">
                                     <th scope="col" class="px-6 py-3">
@@ -54,12 +64,11 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="mt-5">
-                        {{ $users->links() }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+<script>
+    let table = new DataTable('#myTable');
+</script>
