@@ -28,6 +28,7 @@ class ProjectFactory extends Factory
             'user_id' => $user->random(),
             'client_id' => $client->random(),
             'status' => fake()->randomElement(ProjectStatus::cases())->value,
+            'project_cost' => fake()->randomFloat(2, 1000, 100000),
             'deadline_at' => now()->addDays(rand(1, 30))->format('Y-m-d'),
         ];
     }

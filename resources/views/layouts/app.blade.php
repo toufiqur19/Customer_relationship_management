@@ -22,6 +22,7 @@
         <script src="{{ asset('js/toastify-js.js') }}"></script>
         <script src="{{ asset('js/sweetalert.min.js') }}"></script>
         <script src="{{ asset('js/toastify_msg.js') }}"></script>
+        
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
@@ -46,22 +47,8 @@
             </main>
         </div>
         
-        <script>
-            const toggleSidebar = document.getElementById('toggleSidebar');
-            const sidebar = document.getElementById('sidebar');
-            const closeSidebar = document.getElementById('closeSidebar');
-
-            toggleSidebar.addEventListener('click', () => {
-                sidebar.classList.remove('hidden');
-                toggleSidebar.classList.add('hidden');
-                closeSidebar.classList.remove('hidden');
-            });
-
-            closeSidebar.addEventListener('click', () => {
-                sidebar.classList.add('hidden');
-                toggleSidebar.classList.remove('hidden');
-                closeSidebar.classList.add('hidden');
-            });
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ asset('js/chart.js') }}"></script>
+        <script src="{{ asset('js/script.js') }}"></script>
     </body>
 </html>
