@@ -11,12 +11,26 @@
                 </div>
             </div>
 
+            <!-- Hamburger -->
             <div class="flex items-center lg:hidden">
                 <i id="toggleSidebar" class="fa-solid fa-bars-staggered text-white font-bold text-2xl"></i>
                 <i id="closeSidebar" class="fa-solid fa-xmark text-white font-bold text-2xl hidden"></i>
             </div>
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="">
+                    <div id="notification_icon" class="text-white cursor-pointer pr-3">
+                        <i class="fa-solid fa-bell relative"></i>
+                        <span class="absolute flex items-center justify-center w-1 h-1 p-2 ml-[5px] top-[16px] text-xs bg-red-600 rounded-full">{{ auth()->user()->unreadNotifications->count() }}</span>
+                    </div>
+                    <div id="notification" class="absolute hidden top-[4.3rem] bg-white shadow-md right-32 text-[#2A3F54] rounded-md">
+                        @foreach(auth()->user()->notifications as $notification)
+                            <ul class="cursor-pointer border-b border-gray-200 py-2 px-5 hover:bg-gray-200 duration-500">
+                                <a class="{{ $notification->read_at ? 'text-gray-400' : 'text-gray-900' }}" href="{{ route('markAsRead', $notification->id) }}">{{ $notification->data['company_name'] }}</a>   
+                            </ul>   
+                        @endforeach
+                    </div>
+                </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150">
@@ -51,3 +65,12 @@
         </div>
     </div>
 </nav>
+
+<script>
+    const notification = document.getElementById('notification');
+    const notification_icon = document.getElementById('notification_icon');
+
+    notification_icon.addEventListener('click', () => {
+        notification.classList.toggle('hidden');
+    });
+</script>

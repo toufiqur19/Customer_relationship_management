@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     //task route
     Route::resource('tasks',TaskController::class);
 
+    //mark as read
+    Route::get('/markAsRead/{id}', [DashboardController::class, 'markAsRead'])->name('markAsRead');      
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

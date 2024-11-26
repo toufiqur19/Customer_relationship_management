@@ -8,6 +8,10 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientStoreData;
 use App\Http\Requests\ClientUpdateData;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ClientCreatedNotification;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -34,7 +38,10 @@ class ClientController extends Controller
      */
     public function store(ClientStoreData $request)
     {
-        Client::create($request->validated());
+        $clients = Client::create($request->validated());
+        $users = User::all();
+
+        Notification::send($users, new ClientCreatedNotification($clients));
 
         return redirect()->route('clients.index')->with('success', 'Client created successfully');
     }
