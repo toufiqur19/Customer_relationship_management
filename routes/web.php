@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('home');
@@ -21,6 +23,12 @@ Route::middleware('auth')->group(function () {
 
     //client route
     Route::resource('clients',ClientController::class);
+
+    // role route
+    Route::resource('roles',RoleController::class);
+
+    // Permission route
+    Route::resource('permissions',PermissionController::class);
 
     //project route
     Route::resource('projects',ProjectController::class);
