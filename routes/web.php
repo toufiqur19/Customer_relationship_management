@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\TodoListController;
 
 Route::get('/', function () {
     return view('home');
@@ -35,6 +36,14 @@ Route::middleware('auth')->group(function () {
 
     //task route
     Route::resource('tasks',TaskController::class);
+
+    // todolist route
+    Route::get('/todos', [TodoListController::class, 'index'])->name('todos.index');
+    Route::get('/todos/create', [TodoListController::class, 'create'])->name('todos.create');
+    Route::post('/todos', [TodoListController::class, 'store'])->name('todos.store');
+    Route::get('/todos/{todo}/edit', [TodoListController::class, 'edit'])->name('todos.edit');
+    Route::put('/todos/{todo}', [TodoListController::class, 'update'])->name('todos.update');
+    Route::get('/todos/{id}', [TodoListController::class, 'delete'])->name('delete');
 
     //mark as read
     Route::get('/markAsRead/{id}', [DashboardController::class, 'markAsRead'])->name('markAsRead');      

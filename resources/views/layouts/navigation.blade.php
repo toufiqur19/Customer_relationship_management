@@ -66,6 +66,7 @@
     </div>
 </nav>
 
+@section('script')
 <script>
     const notification = document.getElementById('notification');
     const notification_icon = document.getElementById('notification_icon');
@@ -74,3 +75,4 @@
         notification.classList.toggle('hidden');
     });
 </script>
+@endsection

@@ -37,7 +37,7 @@
                 <div class="lg:ml-56 mt-[4rem] lg:mt-[5rem] py-5 px-7 w-[100%] lg:w-[75%] space-y-5">
                     @isset($header)
                     <header class="bg-white shadow rounded-md">
-                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
                             {{ $header }}
                         </div>
                     </header>
@@ -47,6 +47,8 @@
             </main>
         </div>
         
+        @yield('script')
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="{{ asset('js/chart.js') }}"></script>
         <script src="{{ asset('js/script.js') }}"></script>
