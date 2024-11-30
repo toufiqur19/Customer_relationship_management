@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserData;
-use App\Http\Requests\UpdateUserData;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Requests\StoreUserData;
+use App\Http\Requests\UpdateUserData;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view_users', only: ['index']),
+            new Middleware('permission:create_users', only: ['create', 'store']),
+            new Middleware('permission:edit_users', only: ['edit']),
+            new Middleware('permission:delete_users', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $users = User::get();
@@ -39,9 +49,12 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('users.edit',compact('user'));
+        $user = User::find($id);
+        $roles = Role::orderBy('name','ASC')->get();
+        $hasRoles = $user->roles->pluck('id');
+        return view('users.edit',compact('user','roles','hasRoles'));
     }
 
     /**
@@ -50,6 +63,7 @@ class UserController extends Controller
     public function update(UpdateUserData $request, User $user)
     {
         $user->update($request->validated());
+        $user->syncRoles($request->role);
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 

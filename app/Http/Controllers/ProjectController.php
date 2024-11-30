@@ -6,14 +6,22 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Requests\Project\ProjectStoreData;
 use App\Http\Requests\Project\ProjectUpdateData;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ProjectController extends Controller
+class ProjectController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view_projects', only: ['index']),
+            new Middleware('permission:create_projects', only: ['create', 'store']),
+            new Middleware('permission:edit_projects', only: ['edit']),
+            new Middleware('permission:delete_projects', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $projects = Project::with(['client','user'])->get();

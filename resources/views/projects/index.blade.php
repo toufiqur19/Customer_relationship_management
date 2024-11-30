@@ -64,8 +64,9 @@
                                         {{ $project->status }}
                                     </td>
                                     <td class="px-6 py-2 flex gap-2">
+                                        @can('edit_projects')
                                         <a class="bg-green-600 text-white px-2 py-1 rounded-md" href="{{ route('projects.edit',$project) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-
+                                        @endcan
                                         @can('delete_projects')
                                         <form action="{{  route('projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Are you sure?')" class="inline-block">
                                            @method('DELETE')

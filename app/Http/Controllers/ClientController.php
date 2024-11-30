@@ -3,21 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientStoreData;
 use App\Http\Requests\ClientUpdateData;
-use App\Models\User;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Notifications\ClientCreatedNotification;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ClientController extends Controller
+class ClientController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view_clients', only: ['index']),
+            new Middleware('permission:create_clients', only: ['create', 'store']),
+            new Middleware('permission:edit_clients', only: ['edit']),
+            new Middleware('permission:delete_clients', only: ['destroy']),
+        ];
+    }
+    
     public function index()
     {
         $clients = Client::get();

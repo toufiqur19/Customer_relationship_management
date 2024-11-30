@@ -34,6 +34,9 @@
                                         Email
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Roles
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Action
                                     </th>
                                 </tr>
@@ -50,14 +53,20 @@
                                     <td class="px-6 py-2">
                                         {{ $user->email }}
                                     </td>
+                                    <td class="px-6 py-2">
+                                        {{ $user->roles->pluck('name')->implode(', ') }}
+                                    </td>
                                     <td class="px-6 py-2 flex gap-2">
+                                        @can('edit_users')
                                         <a class="bg-green-600 text-white px-2 py-1 rounded-md" href="{{ route('users.edit',$user) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-
+                                        @endcan
+                                        @can('delete_users')
                                         <form action="{{  route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Are you sure?')" class="inline-block">
                                            @method('DELETE')
                                            @csrf
                                            <button class="bg-red-600 text-white px-2 py-1 rounded-md" type="submit"><i class="fa-solid fa-trash-can"></i></button> 
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

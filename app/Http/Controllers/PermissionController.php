@@ -5,12 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class PermissionController extends Controller
+class PermissionController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view_permission', only: ['index']),
+            new Middleware('permission:create_permission', only: ['create', 'store']),
+            new Middleware('permission:edit_permission', only: ['edit']),
+            new Middleware('permission:delete_permission', only: ['destroy']),
+        ];
+    }
+    
     public function index()
     {
         $permissions = Permission::all();

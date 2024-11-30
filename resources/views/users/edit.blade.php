@@ -34,6 +34,21 @@
                             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email',$user->email)" required autocomplete="username" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
+
+                        <!-- Role -->
+                        <div class="mt-4">
+                            @if ($roles->isNotEmpty())
+                                    @foreach ($roles as $role)
+                                        <div class="mt-3">
+                                            <input type="checkbox" name="role[]"
+                                            {{($hasRoles->contains($role->id) ? 'checked' : '')}}
+                                            id="{{ $role->id }}" class="rounded"
+                                            value="{{ $role->name }}" >
+                                            <label for="{{ $role->id }}">{{ $role->name }}</label>
+                                        </div>
+                                    @endforeach
+                                @endif
+                        </div>
                 
                         <div class="flex items-center mt-4">
                            <x-primary-button>

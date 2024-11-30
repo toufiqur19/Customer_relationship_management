@@ -3,15 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view_roles', only: ['index']),
+            new Middleware('permission:create_roles', only: ['create', 'store']),
+            new Middleware('permission:edit_roles', only: ['edit']),
+            new Middleware('permission:delete_roles', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $roles = Role::all();

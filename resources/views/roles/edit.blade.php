@@ -17,11 +17,12 @@
                 
                         <!-- Name -->
                         <div class="w-[50%]">
-                            <x-input-label for="name" :value="__('Name')" />
+                            <x-input-label class="font-medium" for="name" :value="__('Name')" />
                             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $role->name)" required autofocus autocomplete="name" />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
+                        <p class="mt-5 font-medium">All Permissions:</p>
                         <div class="grid grid-cols-4 mb-3">
                             @if ($permissions->isNotEmpty())
                                 @foreach ($permissions as $permission)

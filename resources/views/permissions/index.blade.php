@@ -51,9 +51,10 @@
                                         {{ $permission->roles->pluck('name')->implode(', ') }}
                                     </th>
                                     <td class="px-6 py-2 flex gap-2 border-b-2">
+                                        @can('edit_permission')
                                         <a class="bg-green-600 text-white px-2 py-1 rounded-md" href="{{ route('permissions.edit',$permission) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-
-                                        @can('delete_projects')
+                                        @endcan
+                                        @can('delete_permission')
                                         <form action="{{  route('permissions.destroy', $permission) }}" method="POST" onsubmit="return confirm('Are you sure?')" class="inline-block">
                                            @method('DELETE')
                                            @csrf

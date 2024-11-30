@@ -8,12 +8,21 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Http\Requests\Task\TaskStoreData;
 use App\Http\Requests\Task\TaskUpdateData;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class TaskController extends Controller
+class TaskController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view_tasks', only: ['index']),
+            new Middleware('permission:create_tasks', only: ['create', 'store']),
+            new Middleware('permission:edit_tasks', only: ['edit']),
+            new Middleware('permission:delete_tasks', only: ['destroy']),
+        ];
+    }
+    
     public function index()
     {
         $tasks = Task::with(['user','project', 'client'])->get();

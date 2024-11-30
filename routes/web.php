@@ -19,7 +19,7 @@ Route::get('/dashboard',[DashboardController::class,'dashboard'])->middleware(['
 
 Route::middleware('auth')->group(function () {
     //user route
-    Route::resource('users',UserController::class)->middleware('can:manage_users');
+    Route::resource('users',UserController::class);
 
     //client route
     Route::resource('clients',ClientController::class);

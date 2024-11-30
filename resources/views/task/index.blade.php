@@ -70,13 +70,16 @@
                                         {{ $task->status }}
                                     </td>
                                     <td class="px-6 py-2 flex gap-2">
+                                        @can('edit_tasks')
                                         <a class="bg-green-600 text-white px-2 py-1 rounded-md" href="{{ route('tasks.edit',$task) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-
+                                        @endcan
+                                        @can('delete_tasks')
                                         <form action="{{  route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('Are you sure?')" class="inline-block">
                                            @method('DELETE')
                                            @csrf
                                            <button class="bg-red-600 text-white px-2 py-1 rounded-md" type="submit"><i class="fa-solid fa-trash-can"></i></button> 
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

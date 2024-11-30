@@ -58,8 +58,9 @@
                                         {{ $client->contact_email }}
                                     </td>
                                     <td class="px-6 py-2 flex gap-2">
+                                        @can('edit_clients')
                                         <a class="bg-green-600 text-white px-2 py-1 rounded-md" href="{{ route('clients.edit',$client) }}"><i class="fa-solid fa-pen-to-square"></i></a> 
-
+                                        @endcan
                                         @can('delete_clients')
                                         <form action="{{  route('clients.destroy', $client) }}" method="POST" class="inline-block">
                                            @method('DELETE')

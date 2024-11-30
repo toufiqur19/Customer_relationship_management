@@ -40,20 +40,22 @@
                             </thead>
                             <tbody>
                                 @foreach ($roles as $role)
-                                <tr class="bg-white border-b">
-                                    <th scope="row" class="px-6 py-2 border-b-2">
+                                <tr class="bg-white border-b-2">
+                                    <th scope="row" class="px-6 py-2">
                                         {{ $role->id }}
                                     </th>
-                                    <th scope="row" class="px-6 py-2 border-b-2">
+                                    <th scope="row" class="px-6 py-2">
                                         {{ $role->name }}
                                     </th>
-                                    <td class="px-6 py-4 border-b-2">
+                                    <td class="px-6 py-4">
                                        {{ $role->permissions->pluck('name')->implode(', ') }}
                                     </td>
-                                    <td class="px-6 py-2 flex gap-2 border-b-2">
+                                    <td class="px-6 py-2 flex gap-2">
+                                        @can('edit_roles')
                                         <a class="bg-green-600 text-white px-2 py-1 rounded-md" href="{{ route('roles.edit',$role) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        @endcan
 
-                                        @can('delete_projects')
+                                        @can('delete_roles')
                                         <form action="{{  route('roles.destroy', $role) }}" method="POST" onsubmit="return confirm('Are you sure?')" class="inline-block">
                                            @method('DELETE')
                                            @csrf

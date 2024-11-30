@@ -14,7 +14,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'manage_users']);
+        Permission::create(['name' => 'view_users']);
         Permission::create(['name' => 'delete_tasks']);
         Permission::create(['name' => 'delete_clients']);
         Permission::create(['name' => 'delete_projects']);
@@ -23,7 +23,7 @@ class PermissionSeeder extends Seeder
 
         $role = Role::findByName('admin');
         $role->givePermissionTo([
-            'manage_users',
+            'view_users',
             'delete_tasks',
             'delete_clients',
             'delete_projects',
