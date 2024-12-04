@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/toastify.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-tagsinput.css') }}">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -23,6 +24,7 @@
         <script src="{{ asset('js/sweetalert.min.js') }}"></script>
         <script src="{{ asset('js/toastify_msg.js') }}"></script>
         
+        <script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
@@ -49,6 +51,7 @@
         
         @yield('script')
 
+        <script src="{{ asset('js/bootstrap-tagsinput.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="{{ asset('js/chart.js') }}"></script>
         <script src="{{ asset('js/script.js') }}"></script>

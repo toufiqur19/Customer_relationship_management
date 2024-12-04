@@ -22,6 +22,19 @@
                 <li class="hover:bg-gray-200 hover:text-[#2A3F54] w-full lg:w-[90%] cround duration-500 {{ Request::is('tasks') ? 'bg-gray-200 w-full lg:w-[90%] cround text-[#2A3F54]' : '' }}"><a class="lg:ml-7" href="{{ route('tasks.index') }}"><i class="fa-solid fa-list-check mr-2"></i>Tasks</a></li>
                 @endcan
                 <li class="hover:bg-gray-200 hover:text-[#2A3F54] w-full lg:w-[90%] cround duration-500 {{ Request::is('todos') ? 'bg-gray-200 w-full lg:w-[90%] cround text-[#2A3F54]' : '' }}"><a class="lg:ml-7" href="{{ route('todos.index') }}"><i class="fa-regular fa-rectangle-list mr-2"></i>Todo List</a></li>
+                <li id="dropdownButton" class="hover:bg-gray-200 hover:text-[#2A3F54] w-full lg:w-[90%] cround duration-500 {{ Request::is(['blogs','categories']) ? 'bg-gray-200 w-full lg:w-[90%] cround text-[#2A3F54]' : '' }}"><i class="fa-brands fa-blogger-b mr-2 lg:ml-7"></i>Blogs <i class="fa-solid fa-chevron-down float-end mt-4 pr-4"></i></li>
+            
+               <!-- Dropdown menu -->
+                <div id="dropdownMenu" class="z-10 mt-2 hidden lg:ml-7 duration-500 bg-gray-300 rounded-lg shadow w-44">
+                    <ul class="py-2 text-sm text-[#2A3F54]" aria-labelledby="dropdownButton">
+                    <li class="{{  Request::is('blogs') ? 'bg-gray-600 text-white w-full lg:w-[90%] cround' : ''}}">
+                        <a href="{{  route('blogs.index') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Blog List</a>
+                    </li>
+                    <li class="{{  Request::is('categories') ? 'bg-gray-600 text-white w-full lg:w-[90%] cround' : ''}}">
+                        <a href="{{  route('categories.index') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Category</a>
+                    </li>
+                    </ul>
+                </div>
             </ul>
         </nav>
     </div>
@@ -52,5 +65,11 @@
     </div>
 </aside>
  
- 
+ <script>
+    let dropdownButton  = document.getElementById('dropdownButton');
+    let dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+ </script>
  
